@@ -1,9 +1,11 @@
 package uol.compass.partidos.entity.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Cargo {
     VEREADOR("Vereador"),
     PREFEITO("Prefeito"),
@@ -14,7 +16,7 @@ public enum Cargo {
     PRESIDENTE("Presidente"),
     NENHUM("Nenhum");
 
-    private final String valor;
+    private String valor;
 
     Cargo(String valor) {
         this.valor = valor;

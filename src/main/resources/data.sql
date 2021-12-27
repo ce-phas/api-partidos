@@ -99,10 +99,10 @@ VALUES ('Solidariedade', 'Solidariedade', 'CENTRO', '2012-10-25');
 -- inserir associados
 
 INSERT INTO associado (nome, cargo, data_nasc, sexo, id_partido)
-VALUES ('Simone Tebet', 'Senador', '1970-02-22', 'FEMININO', 5);
+VALUES ('Simone Tebet', 'SENADOR', '1970-02-22', 'FEMININO', 5);
 
 INSERT INTO associado (nome, cargo, data_nasc, sexo, id_partido)
-VALUES ('Efraim Filho', 'Deputado Estadual', '1979-03-18', 'MASCULINO', 4);
+VALUES ('Efraim Filho', 'DEPUTADO_ESTADUAL', '1979-03-18', 'MASCULINO', 4);
 
 INSERT INTO associado (nome, cargo, data_nasc, sexo, id_partido)
-VALUES ('Fátima Bezerra', 'Governador', '1955-09-19', 'FEMININO', 13);
+VALUES ('Fátima Bezerra', 'GOVERNADOR', '1955-09-19', 'FEMININO', 13);
