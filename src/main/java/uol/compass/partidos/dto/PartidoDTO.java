@@ -14,5 +14,4 @@ public class PartidoDTO implements Serializable {
     private String sigla;
     private Ideologia ideologia;
     private LocalDate dataFundacao;
-    private List<AssociadoDTO> associados;
 }

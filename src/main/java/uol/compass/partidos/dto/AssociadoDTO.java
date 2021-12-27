@@ -14,5 +14,4 @@ public class AssociadoDTO implements Serializable {
     private Cargo cargo;
     private LocalDate dataNasc;
     private Sexo sexo;
-    private PartidoDTO partido;
 }
