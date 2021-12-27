@@ -1,6 +1,6 @@
-package entity;
+package uol.compass.partidos.entity;
 
-import entity.enums.Ideologia;
+import uol.compass.partidos.entity.enums.Ideologia;
 import lombok.Data;
 
 import javax.persistence.*;

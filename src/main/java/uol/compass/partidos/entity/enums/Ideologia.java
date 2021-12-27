@@ -1,4 +1,4 @@
-package entity.enums;
+package uol.compass.partidos.entity.enums;
 
 public enum Ideologia {
     CENTRO,

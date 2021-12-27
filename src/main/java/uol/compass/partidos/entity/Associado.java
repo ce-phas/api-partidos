@@ -1,7 +1,7 @@
-package entity;
+package uol.compass.partidos.entity;
 
-import entity.enums.Cargo;
-import entity.enums.Sexo;
+import uol.compass.partidos.entity.enums.Cargo;
+import uol.compass.partidos.entity.enums.Sexo;
 import lombok.Data;
 
 import javax.persistence.*;

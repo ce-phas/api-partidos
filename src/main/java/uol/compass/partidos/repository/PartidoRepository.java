@@ -1,6 +1,6 @@
-package repository;
+package uol.compass.partidos.repository;
 
-import entity.Partido;
+import uol.compass.partidos.entity.Partido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
