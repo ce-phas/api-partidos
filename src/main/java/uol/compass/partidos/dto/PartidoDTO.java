@@ -5,7 +5,7 @@ import uol.compass.partidos.entity.enums.Ideologia;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class PartidoDTO implements Serializable {
@@ -14,5 +14,5 @@ public class PartidoDTO implements Serializable {
     private String sigla;
     private Ideologia ideologia;
     private LocalDate dataFundacao;
-    private Set<AssociadoDTO> associados;
+    private List<AssociadoDTO> associados;
 }

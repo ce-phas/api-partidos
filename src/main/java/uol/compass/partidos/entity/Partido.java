@@ -6,8 +6,7 @@ import uol.compass.partidos.entity.enums.Ideologia;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,5 +27,5 @@ public class Partido {
     private LocalDate dataFundacao;
 
     @OneToMany(mappedBy = "partido")
-    private Set<Associado> associados;
+    private List<Associado> associados;
 }
