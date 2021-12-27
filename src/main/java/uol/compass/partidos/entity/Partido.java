@@ -1,10 +1,12 @@
 package uol.compass.partidos.entity;
 
-import uol.compass.partidos.entity.enums.Ideologia;
 import lombok.Data;
+import uol.compass.partidos.entity.enums.Ideologia;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,5 +23,8 @@ public class Partido {
     @Enumerated(EnumType.STRING)
     private Ideologia ideologia;
 
-    private LocalTime dataFundacao;
+    private LocalDate dataFundacao;
+
+    @OneToMany(mappedBy = "partido")
+    private Set<Associado> associados;
 }

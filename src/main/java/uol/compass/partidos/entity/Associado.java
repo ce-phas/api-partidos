@@ -1,11 +1,11 @@
 package uol.compass.partidos.entity;
 
+import lombok.Data;
 import uol.compass.partidos.entity.enums.Cargo;
 import uol.compass.partidos.entity.enums.Sexo;
-import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -20,7 +20,7 @@ public class Associado {
     @Enumerated(EnumType.STRING)
     private Cargo cargo = Cargo.NENHUM;
 
-    private LocalTime dataNasc;
+    private LocalDate dataNasc;
 
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
