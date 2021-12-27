@@ -1,5 +1,6 @@
 package uol.compass.partidos.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import uol.compass.partidos.entity.enums.Ideologia;
 
@@ -23,6 +24,7 @@ public class Partido {
     @Enumerated(EnumType.STRING)
     private Ideologia ideologia;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFundacao;
 
     @OneToMany(mappedBy = "partido")

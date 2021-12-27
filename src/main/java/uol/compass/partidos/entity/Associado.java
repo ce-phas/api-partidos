@@ -1,5 +1,6 @@
 package uol.compass.partidos.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import uol.compass.partidos.entity.enums.Cargo;
 import uol.compass.partidos.entity.enums.Sexo;
@@ -20,12 +21,13 @@ public class Associado {
     @Enumerated(EnumType.STRING)
     private Cargo cargo = Cargo.NENHUM;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNasc;
 
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
     @ManyToOne
-    @JoinColumn(name = "partido_id")
+    @JoinColumn(name = "id_partido")
     private Partido partido;
 }
