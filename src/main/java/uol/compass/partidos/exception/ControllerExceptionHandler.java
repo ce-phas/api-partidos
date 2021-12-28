@@ -51,4 +51,14 @@ public class ControllerExceptionHandler {
                 dto,
                 request.getDescription(false));
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage illegalArgumentException(IllegalArgumentException ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.BAD_REQUEST.value(),
+                new Date(),
+                ex.getLocalizedMessage(),
+                request.getDescription(false));
+    }
 }
