@@ -27,6 +27,6 @@ public class Partido {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFundacao;
 
-    @OneToMany(mappedBy = "partido")
+    @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL)
     private List<Associado> associados;
 }

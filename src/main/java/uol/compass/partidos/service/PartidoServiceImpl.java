@@ -2,25 +2,23 @@ package uol.compass.partidos.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import uol.compass.partidos.dto.AssociadoDTO;
+import org.springframework.stereotype.Service;
+import uol.compass.partidos.dto.PartidoComAssociadosDTO;
 import uol.compass.partidos.dto.PartidoDTO;
 import uol.compass.partidos.dto.form.PartidoFormDTO;
 import uol.compass.partidos.entity.Partido;
 import uol.compass.partidos.exception.ResourceNotFoundException;
-import uol.compass.partidos.repository.AssociadoRepository;
 import uol.compass.partidos.repository.PartidoRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class PartidoServiceImpl implements PartidoService {
 
     @Autowired
     private PartidoRepository partidoRepository;
-
-    @Autowired
-    private AssociadoRepository associadoRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -82,7 +80,14 @@ public class PartidoServiceImpl implements PartidoService {
     }
 
     @Override
-    public List<AssociadoDTO> getAssociadosPartido(Long id) {
-        return null;
+    public PartidoComAssociadosDTO getAssociadosPartido(Long id) {
+        Optional<Partido> partidoOptional = this.partidoRepository.findById(id);
+
+        if (partidoOptional.isPresent()) {
+            Partido partido = partidoOptional.get();
+            return modelMapper.map(partido, PartidoComAssociadosDTO.class);
+        }
+
+        throw new ResourceNotFoundException("ID não encontrado");
     }
 }

@@ -25,7 +25,14 @@ public class AssociadoController {
     @Transactional
     public ResponseEntity<AssociadoDTO> saveAssociado(@RequestBody @Valid AssociadoFormDTO body) {
         AssociadoDTO associado = this.service.save(body);
-        return new ResponseEntity<AssociadoDTO>(associado, HttpStatus.CREATED);
+        return new ResponseEntity<>(associado, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/partidos")
+    @Transactional
+    public ResponseEntity<AssociadoComPartidoDTO> addFiliacao(@RequestBody @Valid FiliacaoFormDTO body) {
+        AssociadoComPartidoDTO associado = this.service.addFiliacao(body);
+        return ResponseEntity.ok(associado);
     }
 
     @GetMapping
@@ -55,18 +62,10 @@ public class AssociadoController {
         return ResponseEntity.ok(associado);
     }
 
-    @PostMapping("/partidos")
-    @Transactional
-    public ResponseEntity<AssociadoComPartidoDTO> addFiliacao(@RequestBody @Valid FiliacaoFormDTO body) {
-        AssociadoComPartidoDTO associado = this.service.addFiliacao(body);
-        return ResponseEntity.ok(associado);
-    }
-
     @DeleteMapping("{id}/partidos")
     @Transactional
     public ResponseEntity<AssociadoComPartidoDTO> removeFiliacao(@PathVariable Long id) {
         AssociadoComPartidoDTO associado = this.service.removeFiliacao(id);
         return ResponseEntity.ok(associado);
     }
-
 }
