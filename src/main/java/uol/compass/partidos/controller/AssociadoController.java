@@ -8,6 +8,7 @@ import uol.compass.partidos.dto.AssociadoComPartidoDTO;
 import uol.compass.partidos.dto.AssociadoDTO;
 import uol.compass.partidos.dto.form.AssociadoFormDTO;
 import uol.compass.partidos.dto.form.FiliacaoFormDTO;
+import uol.compass.partidos.entity.enums.Cargo;
 import uol.compass.partidos.service.AssociadoService;
 
 import javax.transaction.Transactional;
@@ -36,8 +37,10 @@ public class AssociadoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AssociadoDTO>> getAssociados() {
-        List<AssociadoDTO> associados = this.service.getAssociados();
+    public ResponseEntity<List<AssociadoDTO>> getAssociados(@RequestParam(name = "cargo", required = false) String cargo,
+                                                            @RequestParam(name = "sort", defaultValue = "false", required = false) Boolean sort) {
+        List<AssociadoDTO> associados = this.service.getAssociados(cargo, sort);
+
         return ResponseEntity.ok(associados);
     }
 

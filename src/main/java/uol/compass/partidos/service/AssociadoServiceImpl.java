@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import uol.compass.partidos.dto.AssociadoComPartidoDTO;
 import uol.compass.partidos.dto.form.FiliacaoFormDTO;
 import uol.compass.partidos.entity.Partido;
+import uol.compass.partidos.entity.enums.Cargo;
 import uol.compass.partidos.exception.ResourceNotFoundException;
 import uol.compass.partidos.dto.AssociadoDTO;
 import uol.compass.partidos.dto.form.AssociadoFormDTO;
@@ -13,6 +14,7 @@ import uol.compass.partidos.entity.Associado;
 import uol.compass.partidos.repository.AssociadoRepository;
 import uol.compass.partidos.repository.PartidoRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,8 +39,19 @@ public class AssociadoServiceImpl implements AssociadoService {
     }
 
     @Override
-    public List<AssociadoDTO> getAssociados() {
-        List<Associado> associados = this.associadoRepository.findAll();
+    public List<AssociadoDTO> getAssociados(String cargo, Boolean sort) {
+        List<Associado> associados;
+
+        if (cargo == null) {
+            associados = this.associadoRepository.findAll();
+        } else {
+            associados = this.associadoRepository.findByCargo(
+                    Cargo.valueOf(cargo.toUpperCase().replace(' ', '_')));
+        }
+
+        if (sort) {
+            associados.sort(Comparator.comparing(Associado::getNome));
+        }
 
         return associados
                 .stream()
