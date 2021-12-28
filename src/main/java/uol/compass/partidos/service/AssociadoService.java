@@ -13,7 +13,7 @@ public interface AssociadoService {
 
     AssociadoDTO searchAssociado(Long id);
 
-    AssociadoDTO updateAssociado(AssociadoFormDTO body);
+    AssociadoDTO updateAssociado(Long id, AssociadoFormDTO body);
 
     AssociadoDTO deleteAssociado(Long id);
 

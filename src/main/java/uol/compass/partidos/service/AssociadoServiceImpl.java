@@ -10,6 +10,8 @@ import uol.compass.partidos.dto.form.AssociadoFormDTO;
 import uol.compass.partidos.entity.Associado;
 import uol.compass.partidos.repository.AssociadoRepository;
 
+import javax.persistence.EntityNotFoundException;
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,13 +55,30 @@ public class AssociadoServiceImpl implements AssociadoService {
     }
 
     @Override
-    public AssociadoDTO updateAssociado(AssociadoFormDTO body) {
-        return null;
+    public AssociadoDTO updateAssociado(Long id, AssociadoFormDTO body) {
+        Optional<Associado> associado = this.repository.findById(id);
+
+        if (associado.isPresent()) {
+            Associado updatedAssociado = modelMapper.map(body, Associado.class);
+            updatedAssociado.setId(id);
+            this.repository.save(updatedAssociado);
+
+            return modelMapper.map(updatedAssociado, AssociadoDTO.class);
+        }
+
+        throw new ResourceNotFoundException("ID não encontrado");
     }
 
     @Override
     public AssociadoDTO deleteAssociado(Long id) {
-        return null;
+        Optional<Associado> associado = this.repository.findById(id);
+
+        if (associado.isPresent()) {
+            this.repository.deleteById(id);
+            return modelMapper.map(associado.get(), AssociadoDTO.class);
+        }
+
+        throw new ResourceNotFoundException("ID não encontrado");
     }
 
     @Override

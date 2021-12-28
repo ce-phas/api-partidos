@@ -37,4 +37,18 @@ public class AssociadoController {
         return ResponseEntity.ok(associado);
     }
 
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<AssociadoDTO> updateAssociado(@PathVariable Long id,
+                                                        @RequestBody @Valid AssociadoFormDTO body) {
+        AssociadoDTO associado = this.service.updateAssociado(id, body);
+        return ResponseEntity.ok(associado);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<AssociadoDTO> deleteAssociado(@PathVariable Long id) {
+        AssociadoDTO associado = this.service.deleteAssociado(id);
+        return ResponseEntity.ok(associado);
+    }
 }
