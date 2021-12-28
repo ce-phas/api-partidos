@@ -1,6 +1,7 @@
 package uol.compass.partidos.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uol.compass.partidos.dto.AssociadoDTO;
@@ -22,7 +23,7 @@ public class AssociadoController {
     @Transactional
     public ResponseEntity<AssociadoDTO> saveAssociado(@RequestBody @Valid AssociadoFormDTO body) {
         AssociadoDTO associado = this.service.save(body);
-        return ResponseEntity.ok(associado);
+        return new ResponseEntity<AssociadoDTO>(associado, HttpStatus.CREATED);
     }
 
     @GetMapping

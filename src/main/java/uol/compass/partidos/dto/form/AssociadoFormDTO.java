@@ -5,7 +5,9 @@ import lombok.Data;
 import uol.compass.partidos.entity.enums.Cargo;
 import uol.compass.partidos.entity.enums.Sexo;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
@@ -15,7 +17,7 @@ public class AssociadoFormDTO {
     @Size(min = 1, max = 255)
     private String nome;
 
-    @NotNull(message = "este campo não pode estar vazio e deve ser um dos seguintes valores: 'Vereador', 'Prefeito', "
+    @NotNull(message = "este campo não pode estar vazio e deve conter um dos seguintes valores: 'Vereador', 'Prefeito', "
             + "'Deputado Estadual, 'Deputado Federal', 'Senador', 'Governador', 'Presidente', 'Nenhum'")
     private Cargo cargo;
 
@@ -24,6 +26,6 @@ public class AssociadoFormDTO {
     private LocalDate dataNasc;
 
 
-    @NotNull(message = "este campo não pode estar vazio e deve ser um dos seguintes valores: 'Feminino', 'Masculino'")
+    @NotNull(message = "este campo não pode estar vazio e deve conter um dos seguintes valores: 'Feminino', 'Masculino'")
     private Sexo sexo;
 }
