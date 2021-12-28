@@ -20,10 +20,8 @@ public class PartidoFormDTO {
     private String sigla;
 
     @NotNull(message = "a ideologia deve ser um dos seguintes valores: 'Centro', 'Direita', 'Esquerda'")
-    @NotEmpty
     private Ideologia ideologia;
 
     @NotNull(message = "a data deve obedecer ao seguinte formato: 'dd/MM/yyyy'")
-    @NotEmpty
     private LocalDate dataFundacao;
 }

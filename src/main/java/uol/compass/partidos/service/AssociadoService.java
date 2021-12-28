@@ -1,7 +1,9 @@
 package uol.compass.partidos.service;
 
+import uol.compass.partidos.dto.AssociadoComPartidoDTO;
 import uol.compass.partidos.dto.AssociadoDTO;
 import uol.compass.partidos.dto.form.AssociadoFormDTO;
+import uol.compass.partidos.dto.form.FiliacaoFormDTO;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public interface AssociadoService {
 
     AssociadoDTO deleteAssociado(Long id);
 
-    AssociadoDTO addFiliacao(Long id, Long idPartido);
+    AssociadoComPartidoDTO addFiliacao(FiliacaoFormDTO body);
 
-    AssociadoDTO removeFiliacao(Long id, Long idPartido);
+    AssociadoComPartidoDTO removeFiliacao(Long id);
 }

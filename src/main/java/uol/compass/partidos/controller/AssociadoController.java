@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uol.compass.partidos.dto.AssociadoComPartidoDTO;
 import uol.compass.partidos.dto.AssociadoDTO;
 import uol.compass.partidos.dto.form.AssociadoFormDTO;
+import uol.compass.partidos.dto.form.FiliacaoFormDTO;
 import uol.compass.partidos.service.AssociadoService;
 
 import javax.transaction.Transactional;
@@ -52,4 +54,19 @@ public class AssociadoController {
         AssociadoDTO associado = this.service.deleteAssociado(id);
         return ResponseEntity.ok(associado);
     }
+
+    @PostMapping("/partidos")
+    @Transactional
+    public ResponseEntity<AssociadoComPartidoDTO> addFiliacao(@RequestBody @Valid FiliacaoFormDTO body) {
+        AssociadoComPartidoDTO associado = this.service.addFiliacao(body);
+        return ResponseEntity.ok(associado);
+    }
+
+    @DeleteMapping("{id}/partidos")
+    @Transactional
+    public ResponseEntity<AssociadoComPartidoDTO> removeFiliacao(@PathVariable Long id) {
+        AssociadoComPartidoDTO associado = this.service.removeFiliacao(id);
+        return ResponseEntity.ok(associado);
+    }
+
 }

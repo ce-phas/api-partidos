@@ -14,7 +14,7 @@ public interface PartidoService {
 
     PartidoDTO searchPartido(Long id);
 
-    PartidoDTO updatePartido(PartidoFormDTO body);
+    PartidoDTO updatePartido(Long id, PartidoFormDTO body);
 
     PartidoDTO deletePartido(Long id);
 
