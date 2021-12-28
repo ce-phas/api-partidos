@@ -10,7 +10,7 @@ public interface PartidoService {
 
     PartidoDTO save(PartidoFormDTO body);
 
-    List<PartidoDTO> getPartidos();
+    List<PartidoDTO> getPartidos(String ideologia);
 
     PartidoDTO searchPartido(Long id);
 

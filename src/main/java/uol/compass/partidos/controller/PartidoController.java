@@ -28,8 +28,8 @@ public class PartidoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PartidoDTO>> getPartidos() {
-        List<PartidoDTO> partidos = this.service.getPartidos();
+    public ResponseEntity<List<PartidoDTO>> getPartidos(@RequestParam(name = "ideologia", required = false) String ideologia) {
+        List<PartidoDTO> partidos = this.service.getPartidos(ideologia);
         return ResponseEntity.ok(partidos);
     }
 

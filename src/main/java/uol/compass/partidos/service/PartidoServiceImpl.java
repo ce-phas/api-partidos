@@ -7,6 +7,7 @@ import uol.compass.partidos.dto.PartidoComAssociadosDTO;
 import uol.compass.partidos.dto.PartidoDTO;
 import uol.compass.partidos.dto.form.PartidoFormDTO;
 import uol.compass.partidos.entity.Partido;
+import uol.compass.partidos.entity.enums.Ideologia;
 import uol.compass.partidos.exception.ResourceNotFoundException;
 import uol.compass.partidos.repository.PartidoRepository;
 
@@ -31,8 +32,14 @@ public class PartidoServiceImpl implements PartidoService {
     }
 
     @Override
-    public List<PartidoDTO> getPartidos() {
-        List<Partido> partidos = this.partidoRepository.findAll();
+    public List<PartidoDTO> getPartidos(String ideologia) {
+        List<Partido> partidos;
+
+        if (ideologia == null) {
+            partidos = this.partidoRepository.findAll();
+        } else {
+            partidos = this.partidoRepository.findByIdeologia(Ideologia.valueOf(ideologia.toUpperCase()));
+        }
 
         return partidos
                 .stream()

@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 @Service
 public class AssociadoServiceImpl implements AssociadoService {
 
+    final String ID_NOT_FOUND = "ID não encontrado";
+
     @Autowired
     private AssociadoRepository associadoRepository;
 
@@ -68,7 +70,7 @@ public class AssociadoServiceImpl implements AssociadoService {
             return modelMapper.map(associado.get(), AssociadoDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 
     @Override
@@ -83,7 +85,7 @@ public class AssociadoServiceImpl implements AssociadoService {
             return modelMapper.map(updatedAssociado, AssociadoDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class AssociadoServiceImpl implements AssociadoService {
             return modelMapper.map(associado.get(), AssociadoDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 
     @Override
@@ -104,10 +106,10 @@ public class AssociadoServiceImpl implements AssociadoService {
         Optional<Partido> partidoOptional = this.partidoRepository.findById(body.getIdPartido());
 
         if (associadoOptional.isEmpty()) {
-            throw new ResourceNotFoundException("ID de associado não encontrado");
+            throw new ResourceNotFoundException(ID_NOT_FOUND + ": associado");
         }
         if (partidoOptional.isEmpty()) {
-            throw new ResourceNotFoundException("ID de partido não encontrado");
+            throw new ResourceNotFoundException(ID_NOT_FOUND + ": partido");
         }
         Associado associado = associadoOptional.get();
         Partido partido = partidoOptional.get();
@@ -130,6 +132,6 @@ public class AssociadoServiceImpl implements AssociadoService {
             return modelMapper.map(associado, AssociadoComPartidoDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 }
