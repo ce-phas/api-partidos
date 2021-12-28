@@ -5,6 +5,7 @@ import lombok.Data;
 import uol.compass.partidos.entity.enums.Ideologia;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 

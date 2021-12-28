@@ -8,6 +8,7 @@ import uol.compass.partidos.dto.form.AssociadoFormDTO;
 import uol.compass.partidos.service.AssociadoService;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class AssociadoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<AssociadoDTO> saveAssociado(@RequestBody AssociadoFormDTO body) {
+    public ResponseEntity<AssociadoDTO> saveAssociado(@RequestBody @Valid AssociadoFormDTO body) {
         AssociadoDTO associado = this.service.save(body);
         return ResponseEntity.ok(associado);
     }

@@ -3,6 +3,7 @@ package uol.compass.partidos.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import uol.compass.partidos.exception.ResourceNotFoundException;
 import uol.compass.partidos.dto.AssociadoDTO;
 import uol.compass.partidos.dto.form.AssociadoFormDTO;
@@ -26,7 +27,6 @@ public class AssociadoServiceImpl implements AssociadoService {
     public AssociadoDTO save(AssociadoFormDTO body) {
         Associado associado = modelMapper.map(body, Associado.class);
         Associado savedAssociado = this.repository.save(associado);
-
         return modelMapper.map(savedAssociado, AssociadoDTO.class);
     }
 
