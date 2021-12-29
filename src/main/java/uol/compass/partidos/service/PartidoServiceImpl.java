@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 @Service
 public class PartidoServiceImpl implements PartidoService {
 
+    static final String ID_NOT_FOUND = "ID não encontrado";
+
     @Autowired
     private PartidoRepository partidoRepository;
 
@@ -56,7 +58,7 @@ public class PartidoServiceImpl implements PartidoService {
             return modelMapper.map(partido.get(), PartidoDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class PartidoServiceImpl implements PartidoService {
             return modelMapper.map(updatedPartido, PartidoDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 
     @Override
@@ -83,7 +85,7 @@ public class PartidoServiceImpl implements PartidoService {
             return modelMapper.map(partido.get(), PartidoDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 
     @Override
@@ -95,6 +97,6 @@ public class PartidoServiceImpl implements PartidoService {
             return modelMapper.map(partido, PartidoComAssociadosDTO.class);
         }
 
-        throw new ResourceNotFoundException("ID não encontrado");
+        throw new ResourceNotFoundException(ID_NOT_FOUND);
     }
 }

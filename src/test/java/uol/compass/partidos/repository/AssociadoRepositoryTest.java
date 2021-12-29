@@ -71,8 +71,6 @@ public class AssociadoRepositoryTest {
     public void findByInvalidCargoTest() {
         String cargo = "CARGO";
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            repository.findByCargo(Cargo.valueOf(cargo));
-        });
+        assertThrows(IllegalArgumentException.class, () -> repository.findByCargo(Cargo.valueOf(cargo)));
     }
 }

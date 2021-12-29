@@ -6,7 +6,6 @@ import uol.compass.partidos.entity.enums.Ideologia;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class PartidoDTO implements Serializable {

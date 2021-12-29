@@ -8,7 +8,6 @@ import uol.compass.partidos.dto.AssociadoComPartidoDTO;
 import uol.compass.partidos.dto.AssociadoDTO;
 import uol.compass.partidos.dto.form.AssociadoFormDTO;
 import uol.compass.partidos.dto.form.FiliacaoFormDTO;
-import uol.compass.partidos.entity.enums.Cargo;
 import uol.compass.partidos.service.AssociadoService;
 
 import javax.transaction.Transactional;

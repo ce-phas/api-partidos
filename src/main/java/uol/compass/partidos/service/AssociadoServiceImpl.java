@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class AssociadoServiceImpl implements AssociadoService {
 
-    final String ID_NOT_FOUND = "ID não encontrado";
+    static final String ID_NOT_FOUND = "ID não encontrado";
 
     @Autowired
     private AssociadoRepository associadoRepository;
@@ -51,7 +51,7 @@ public class AssociadoServiceImpl implements AssociadoService {
                     Cargo.valueOf(cargo.toUpperCase().replace(' ', '_')));
         }
 
-        if (sort) {
+        if (Boolean.TRUE.equals(sort)) {
             associados.sort(Comparator.comparing(Associado::getNome));
         }
 

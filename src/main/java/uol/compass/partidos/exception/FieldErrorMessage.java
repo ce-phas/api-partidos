@@ -2,7 +2,6 @@ package uol.compass.partidos.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.validation.FieldError;
 import uol.compass.partidos.exception.dto.FieldErrorDTO;
 
 import java.util.Date;

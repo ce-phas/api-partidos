@@ -70,8 +70,6 @@ public class PartidoRepositoryTest {
     public void findByInvalidIdeologiaTest() {
         String ideologia = "IDEOLOGIA";
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            repository.findByIdeologia(Ideologia.valueOf(ideologia));
-        });
+        assertThrows(IllegalArgumentException.class, () -> repository.findByIdeologia(Ideologia.valueOf(ideologia)));
     }
 }
