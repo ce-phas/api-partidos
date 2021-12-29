@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -13,12 +14,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @AutoConfigureMockMvc
 class AssociadoControllerTest {
 
@@ -54,69 +55,13 @@ class AssociadoControllerTest {
                 .andExpect(jsonPath("sexo").value("Masculino"));
     }
 
-    /* Testes POST de campos vazios */
-
     @Test
-    @DisplayName("Deve lançar erro de validação ao criar quando o nome estiver vazio")
-    void saveAssociadoWithEmptyNomeTest() throws Exception {
+    @DisplayName("Deve lançar erro de validação ao criar quando um ou mais campos estiverem vazios")
+    void saveAssociadoWithEmptyFieldsTest() throws Exception {
         String json = "{" +
                 "\"nome\":\"\"," +
-                "\"cargo\":\"Presidente\"," +
-                "\"dataNasc\":\"08/09/1925\"," +
-                "\"sexo\":\"Masculino\"" +
-                "}";
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(ASSOCIADO_URI)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc.perform(request).andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro de validação ao criar quando o cargo estiver vazio")
-    void saveAssociadoWithEmptyCargoTest() throws Exception {
-        String json = "{" +
-                "\"nome\":\"Merkin Muffley\"," +
                 "\"cargo\":\"\"," +
-                "\"dataNasc\":\"08/09/1925\"," +
-                "\"sexo\":\"Masculino\"" +
-                "}";
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(ASSOCIADO_URI)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc.perform(request).andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro de validação ao criar quando dataNasc estiver vazio")
-    void saveAssociadoWithEmptyDataNascTest() throws Exception {
-        String json = "{" +
-                "\"nome\":\"Merkin Muffley\"," +
-                "\"cargo\":\"Presidente\"," +
                 "\"dataNasc\":\"\"," +
-                "\"sexo\":\"Masculino\"" +
-                "}";
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(ASSOCIADO_URI)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc.perform(request).andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro de validação ao criar quando o sexo estiver vazio")
-    void saveAssociadoWithEmptySexoTest() throws Exception {
-        String json = "{" +
-                "\"nome\":\"Merkin Muffley\"," +
-                "\"cargo\":\"Presidente\"," +
-                "\"dataNasc\":\"08/09/1925\"," +
                 "\"sexo\":\"\"" +
                 "}";
 
@@ -125,53 +70,21 @@ class AssociadoControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json);
 
-        mvc.perform(request).andExpect(status().isBadRequest());
+        mvc
+                .perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors[0].field").value("cargo"))
+                .andExpect(jsonPath("$.fieldErrors[1].field").value("dataNasc"))
+                .andExpect(jsonPath("$.fieldErrors[2].field").value("nome"))
+                .andExpect(jsonPath("$.fieldErrors[3].field").value("sexo"));
     }
 
-    /* Testes POST com valores inválidos */
-
     @Test
-    @DisplayName("Deve lançar erro de validação ao criar quando o cargo for valor inválido")
-    void saveAssociadoWithInvalidCargoTest() throws Exception {
+    @DisplayName("Deve lançar erro de validação ao criar quando cargo ou sexo forem inválidos")
+    void saveAssociadoWithInvalidFieldsTest() throws Exception {
         String json = "{" +
                 "\"nome\":\"Merkin Muffley\"," +
                 "\"cargo\":\"Imperador\"," +
-                "\"dataNasc\":\"08/09/1925\"," +
-                "\"sexo\":\"Masculino\"" +
-                "}";
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(ASSOCIADO_URI)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc.perform(request).andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro de validação ao criar quando dataNasc for valor inválido")
-    void saveAssociadoWithInvalidDataNascTest() throws Exception {
-        String json = "{" +
-                "\"nome\":\"Merkin Muffley\"," +
-                "\"cargo\":\"Presidente\"," +
-                "\"dataNasc\":\"1925.09.08\"," +
-                "\"sexo\":\"Masculino\"" +
-                "}";
-
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
-                .post(ASSOCIADO_URI)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc.perform(request).andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro de validação ao criar quando o sexo for valor inválido")
-    void saveAssociadoWithInvalidSexoTest() throws Exception {
-        String json = "{" +
-                "\"nome\":\"Merkin Muffley\"," +
-                "\"cargo\":\"Presidente\"," +
                 "\"dataNasc\":\"08/09/1925\"," +
                 "\"sexo\":\"Nenhum\"" +
                 "}";
@@ -181,6 +94,30 @@ class AssociadoControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json);
 
-        mvc.perform(request).andExpect(status().isBadRequest());
+        mvc
+                .perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors[0].field").value("cargo"))
+                .andExpect(jsonPath("$.fieldErrors[1].field").value("sexo"));
+    }
+
+    @Test
+    @DisplayName("Deve lançar erro ao criar quando o formato de data for inválido")
+    void saveAssociadoWithInvalidDataNascTest() throws Exception {
+        String json = "{" +
+                "\"nome\":\"Merkin Muffley\"," +
+                "\"cargo\":\"Presidente\"," +
+                "\"dataNasc\":\"1925/08/09\"," +
+                "\"sexo\":\"Masculino\"" +
+                "}";
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(ASSOCIADO_URI)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc
+                .perform(request)
+                .andExpect(status().isBadRequest());
     }
 }

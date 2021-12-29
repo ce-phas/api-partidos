@@ -13,6 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import uol.compass.partidos.exception.dto.FieldErrorDTO;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class ControllerExceptionHandler {
 
             dto.add(new FieldErrorDTO(field, error));
         });
+
+        dto.sort(Comparator.comparing(FieldErrorDTO::getField));
 
         return new FieldErrorMessage(
                 HttpStatus.BAD_REQUEST.value(),

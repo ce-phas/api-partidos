@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@ActiveProfiles("test")
-public class PartidoRepositoryTest {
+@ActiveProfiles("test-emptydb")
+class PartidoRepositoryTest {
 
     final Ideologia DEFAULT_IDEOLOGIA = Ideologia.CENTRO;
 
@@ -45,7 +46,7 @@ public class PartidoRepositoryTest {
 
     @Test
     @DisplayName("Deve carregar uma lista de partidos ao buscar por uma ideologia válida")
-    public void findByValidIdeologiaTest() {
+    void findByValidIdeologiaTest() {
         List<Partido> partidos = repository.findByIdeologia(DEFAULT_IDEOLOGIA);
 
         assertFalse(partidos.isEmpty());
@@ -57,19 +58,11 @@ public class PartidoRepositoryTest {
 
     @Test
     @DisplayName("Deve carregar uma lista vazia ao buscar por uma ideologia válida, mas ausente")
-    public void findByAbsentIdeologiaTest() {
+    void findByAbsentIdeologiaTest() {
         Ideologia ideologia = Ideologia.DIREITA;
 
         List<Partido> partidos = repository.findByIdeologia(ideologia);
 
         assertTrue(partidos.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro ao buscar por uma ideologia inválida")
-    public void findByInvalidIdeologiaTest() {
-        String ideologia = "IDEOLOGIA";
-
-        assertThrows(IllegalArgumentException.class, () -> repository.findByIdeologia(Ideologia.valueOf(ideologia)));
     }
 }

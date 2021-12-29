@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:partidos-test
+    url: jdbc:h2:mem:partidos-test-emptydb
     username: test
     password: test
   jpa:
@@ -12,3 +12,7 @@ spring:
     console:
       enabled: true
       path: /h2-console
+
+  sql:
+    init:
+      mode: never

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
@@ -20,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@ActiveProfiles("test")
-public class AssociadoRepositoryTest {
+@ActiveProfiles("test-emptydb")
+class AssociadoRepositoryTest {
 
     final Cargo DEFAULT_CARGO = Cargo.PREFEITO;
 
@@ -46,7 +47,7 @@ public class AssociadoRepositoryTest {
 
     @Test
     @DisplayName("Deve carregar uma lista de associados ao buscar por um cargo válido")
-    public void findByValidCargoTest() {
+    void findByValidCargoTest() {
         List<Associado> associados = repository.findByCargo(DEFAULT_CARGO);
 
         assertFalse(associados.isEmpty());
@@ -58,19 +59,11 @@ public class AssociadoRepositoryTest {
 
     @Test
     @DisplayName("Deve carregar uma lista vazia ao buscar por um cargo válido, mas ausente")
-    public void findByAbsentCargoTest() {
+    void findByAbsentCargoTest() {
         Cargo cargo = Cargo.VEREADOR;
 
         List<Associado> associados = repository.findByCargo(cargo);
 
         assertTrue(associados.isEmpty());
-    }
-
-    @Test
-    @DisplayName("Deve lançar erro ao buscar por um cargo inválido")
-    public void findByInvalidCargoTest() {
-        String cargo = "CARGO";
-
-        assertThrows(IllegalArgumentException.class, () -> repository.findByCargo(Cargo.valueOf(cargo)));
     }
 }

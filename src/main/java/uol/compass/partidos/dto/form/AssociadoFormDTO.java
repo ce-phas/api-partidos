@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Data
 public class AssociadoFormDTO {
 
-    @NotEmpty
     @Size(min = 1, max = 255)
     private String nome;
 
