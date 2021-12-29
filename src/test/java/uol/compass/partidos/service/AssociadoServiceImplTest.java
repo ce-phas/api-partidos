@@ -79,7 +79,7 @@ class AssociadoServiceImplTest {
     void getAssociadosTest() {
         List<AssociadoDTO> associados = service.getAssociados(null, false);
 
-        assertNotNull(associados);
+        assertFalse(associados.isEmpty());
     }
 
     @Test
