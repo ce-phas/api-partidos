@@ -40,6 +40,13 @@ arquivo `PartidosApplication.java`.
 
 ## Testes
 
+Os testes foram implementados utilizando o JUnit 5, com expectativa de cobertura mínima de 50% e foco nas classes
+[Service](https://github.com/pedro-as/compass-sprint4/tree/master/src/test/java/uol/compass/partidos/service)
+e [Repository](https://github.com/pedro-as/compass-sprint4/tree/master/src/test/java/uol/compass/partidos/repository).
+Houve implementação parcial de teste da classe
+[Controller](https://github.com/pedro-as/compass-sprint4/tree/master/src/test/java/uol/compass/partidos/controller),
+para os métodos `POST` da classe `AssociadoController`.
+
 ### Cobertura de testes
 
 | Class       | Method       | Line         |
@@ -56,6 +63,8 @@ arquivo `PartidosApplication.java`.
 
 #### Resposta
 
+##### 200
+
 ```json
 [
   {
@@ -68,11 +77,14 @@ arquivo `PartidosApplication.java`.
 ]
 ```
 
-#### Ordenação e filtragem
+#### Filtrar por ideologia
 
-##### Filtrar por ideologia
+`GET /partidos?ideologia={ideologia}`
 
-`GET /partidos?ideologia={centro,direita,esquerda}`
+Valores aceitos (*case insensitive*):
+```
+centro, esquerda, direita
+```
 
 ### Procurar por ID
 
@@ -81,6 +93,8 @@ arquivo `PartidosApplication.java`.
 `GET /partidos/{id}`
 
 #### Resposta
+
+##### 200
 
 ```json
 {
@@ -92,6 +106,17 @@ arquivo `PartidosApplication.java`.
 }
 ```
 
+##### 404
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/partidos/1"
+}
+```
+
 ### Listar associados do partido
 
 #### Requisição
@@ -99,6 +124,8 @@ arquivo `PartidosApplication.java`.
 `GET /partidos/{id}/associados`
 
 #### Resposta
+
+##### 200
 
 ```json
 {
@@ -108,6 +135,17 @@ arquivo `PartidosApplication.java`.
   "ideologia": "Centro",
   "dataFundacao": "31/12/1900",
   "associados": []
+}
+```
+
+##### 404
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/partidos/1"
 }
 ```
 
@@ -144,10 +182,20 @@ curl -X 'POST' \
 }
 ```
 
-##### 404
+##### 400
 
 ```json
-"ID não encontrado"
+{
+  "statusCode": 400,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "fieldErrors": [
+    {
+      "field": "campo",
+      "error": "descrição do erro"
+    }
+  ],
+  "description": "uri=/partidos"
+}
 ```
 
 ### Atualizar partido
@@ -183,10 +231,31 @@ curl -X 'PUT' \
 }
 ```
 
+##### 400
+
+```json
+{
+  "statusCode": 400,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "fieldErrors": [
+    {
+      "field": "campo",
+      "error": "descrição do erro"
+    }
+  ],
+  "description": "uri=/partidos"
+}
+```
+
 ##### 404
 
 ```json
-"ID não encontrado"
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/partidos/1"
+}
 ```
 
 ### Remover partido
@@ -212,5 +281,312 @@ curl -X 'PUT' \
 ##### 404
 
 ```json
-"ID não encontrado"
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/partidos/1"
+}
+```
+
+## Operações suportadas: associados
+
+### Listar todos
+
+#### Requisição
+
+`GET /associados`
+
+#### Resposta
+
+##### 200
+
+```json
+[
+  {
+    "id": 1,
+    "nome": "Fulano de Tal",
+    "cargo": "Prefeito",
+    "dataNasc": "31/12/1950",
+    "sexo": "Masculino"
+  }
+]
+```
+
+#### Ordenação e filtragem
+
+##### Filtrar por cargo
+
+`GET /associados?cargo={cargo}`
+
+Valores aceitos (*case insensitive*):
+```
+vereador, prefeito, deputado estadual, deputado federal, senador, governador, presidente, nenhum
+```
+
+##### Ordenar por nome
+
+`GET /associados?sort=true`
+
+### Procurar por ID
+
+#### Requisição
+
+`GET /associados/{id}`
+
+#### Resposta
+
+#### 200
+
+```json
+{
+  "id": 1,
+  "nome": "Fulano de Tal",
+  "cargo": "Prefeito",
+  "dataNasc": "31/12/1950",
+  "sexo": "Masculino"
+}
+```
+
+##### 404
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/associados/1"
+}
+```
+
+### Cadastrar associado
+
+#### Requisição
+
+`POST /associados`
+
+```curl
+curl -X 'POST' \
+  'http://localhost:8080/associados' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "nome": "Fulano de Tal",
+  "cargo": "Prefeito",
+  "dataNasc": "31/12/1950",
+  "sexo": "Masculino"
+}'
+```
+
+#### Resposta
+
+##### 201
+
+```json
+{
+  "id": 1,
+  "nome": "Fulano de Tal",
+  "cargo": "Prefeito",
+  "dataNasc": "31/12/1950",
+  "sexo": "Masculino"
+}
+```
+
+##### 400
+
+```json
+{
+  "statusCode": 400,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "fieldErrors": [
+    {
+      "field": "campo",
+      "error": "descrição do erro"
+    }
+  ],
+  "description": "uri=/associados"
+}
+```
+
+### Vincular associado a um partido
+
+#### Requisição
+
+`POST /associados/partidos`
+
+```curl
+curl -X 'POST' \
+  'http://localhost:8080/associados' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "idAssociado": 1,
+  "idPartido": 1
+}'
+```
+
+#### Resposta
+
+##### 200
+
+```json
+{
+  "id": 1,
+  "nome": "Fulano de Tal",
+  "cargo": "Prefeito",
+  "dataNasc": "31/12/1950",
+  "sexo": "Masculino",
+  "partido": {
+    "id": 1,
+    "nome": "Partido Central do Meio",
+    "sigla": "PCM",
+    "ideologia": "Centro",
+    "dataFundacao": "31/12/1900"
+  }
+}
+```
+
+##### 404: associado não encontrado
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado: associado",
+  "description": "uri=/associados/partidos"
+}
+```
+
+##### 404: partido não encontrado
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado: partido",
+  "description": "uri=/associados/partidos"
+}
+```
+
+### Atualizar associado
+
+#### Requisição
+
+`PUT /associados/{id}`
+
+```curl
+curl -X 'PUT' \
+  'http://localhost:8080/associados/1' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "nome": "Fulana da Silva",
+  "cargo": "Deputado Federal",
+  "dataNasc": "01/01/1951",
+  "sexo": "Feminino"
+}'
+```
+
+#### Resposta
+
+##### 200
+
+```json
+{
+  "id": 1,
+  "nome": "Fulana da Silva",
+  "cargo": "Deputado Federal",
+  "dataNasc": "01/01/1951",
+  "sexo": "Feminino"
+}
+```
+
+##### 400
+
+```json
+{
+  "statusCode": 400,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "fieldErrors": [
+    {
+      "field": "campo",
+      "error": "descrição do erro"
+    }
+  ],
+  "description": "uri=/associados"
+}
+```
+
+##### 404
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/associados/1"
+}
+```
+
+### Remover associado
+
+#### Requisição
+
+`DELETE /associados/{id}`
+
+#### Resposta
+
+##### 200
+
+```json
+{
+  "id": 1,
+  "nome": "Fulano de Tal",
+  "cargo": "Prefeito",
+  "dataNasc": "31/12/1950",
+  "sexo": "Masculino"
+}
+```
+
+##### 404
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/associados/1"
+}
+```
+
+### Remover filiação
+
+#### Requisição
+
+`DELETE /associados/{id}/partidos`
+
+#### Resposta
+
+##### 200
+
+```json
+{
+  "id": 1,
+  "nome": "Fulano de Tal",
+  "cargo": "Prefeito",
+  "dataNasc": "31/12/1950",
+  "sexo": "Masculino",
+  "partido": null
+}
+```
+
+##### 404
+
+```json
+{
+  "statusCode": 404,
+  "timestamp": "2022-01-01T00:00:00.000+00:00",
+  "message": "ID não encontrado",
+  "description": "uri=/associados/1/partidos"
+}
 ```
